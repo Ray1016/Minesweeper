@@ -1,0 +1,123 @@
+Create the Minesweeper Project
+Over the course of the next few weeks, you'll use your newly-gained JavaScript knowledge to build a classic computer game: Minesweeper!
+
+In total, there will be 6 parts to this project. Today, you will start on part 1 of the project. You can expect to complete Minesweeper locally, on your own computer.
+
+If you've never played Minesweeper, take a few minutes to become familiar with it: Minesweeper overview.
+
+The following is a quick overview of the game:
+
+The objective is to successfully navigate (or, "clear") a grid of squares without encountering any hidden mines (bombs).
+Clicking on a square reveals what is underneath the square.
+If a square reveals a mine, the game is over, and you lose.
+If a square does not reveal a mine, one of two possible things can happen:
+A digit will appear in the square. This digit represents the number of adjacent squares that contain a mine.
+Nothing will appear in the square. In this case, the square will clear and become blank. Adjacent squares will then be recursively revealed.
+If you want to get a feel for the game by playing it first, try it out here. You can also take look at the diagram outlining "Minesweeper Rules".
+
+Finally, a few notes before getting started:
+
+Minesweeper is traditionally played using a Graphical User Interface (GUI). The GUI allows you to see the grid visually, click on squares, and otherwise read all relevant information in one place. This project, however, will result in a terminal-based game, requiring that you type code into the terminal to play the game.
+If you are using Git as you build this project, be sure to create a .gitignore file that includes the node_modules directory.
+Let's get started!
+Mark the tasks as complete by checking them off
+Create Your Project Structure
+1.
+Open up the terminal on your computer. cd to the directory where you want to store this project and create a new directory called minesweeper.
+
+Next, cd into the newly-created minesweeper directory.
+2.
+Inside of minesweeper, create a new directory called src.
+
+cd into src and create a file called minesweeper.js. This is where you'll write your code for the majority of the project's duration. We'll refactor and modularize this file as necessary as your code expands.
+3.
+Finally, this project should support transpilation. Make sure to set up your project to support transpilation before proceeding. The transpilation process will create additional directories that you will need to use. If you need help, refer to our course on Browser Compatibility and Transpilation.
+Demo the Project
+4.
+Before starting, you can always demo a completed version of this project. In the Codecademy terminal to the right, run the following command:
+
+node minesweeper.js
+You should see output that reflects what you will build today.
+Manually Create an Empty Game Board
+5.
+At this point, you should be familiar with the objective and rules of the Minesweeper game. If you haven't already played Minesweeper, we encourage you to refer to the resources in the overview of this project.
+
+Remember, Minesweeper is played on a grid of squares. We'll have to manually create that board so that it can be seen in the terminal when a game is in session.
+
+For now, we'll hard code the board to preview what the board will look like. Later, we'll dynamically generate the board.
+
+In src/minesweeper.js, create a constant called blankLine.
+
+Set it equal to
+
+'  |   |  '
+The | is the vertical line character (also known as a "pipe"). The blankLine variable represents one row with three columns. The columns are separated with the pipe character. There should be a space on both sides of each pipe and a space where each number or mine could exist.
+
+Again, this is a hard coded solution. Later, we'll dynamically generate the board given some inputs.
+Print the Empty Game Board
+6.
+Let's print what an empty board might look like.
+
+Use console.log() to log the following message:
+
+This is what an empty board would look like:
+7.
+Next, use console.log() to log the blankLine constant three times.
+Run Your File: minesweeper.js
+8.
+The transpilation process you performed earlier created a lib directory and contains the transpiled version of your minesweeper.js code. From the terminal, transpile your code again and run your code using:
+
+node lib/minesweeper.js
+Make sure you are inside the root directory when you run this command. What do you see?
+Stuck? Get a hint
+
+Manually Create a Simulated Game Board
+9.
+Great job! Now you can see what a 3 x 3 game board will look like in the terminal (3 rows, 3 columns, for a total of 9 squares).
+
+Let's hard code what a game board will look like with "guesses" and "mines". Be sure to keep the code you've already written.
+
+First, create a constant called guessLine.
+
+Set it equal to
+
+'1 |   |  '
+guessLine represents what the board will look like when a player guesses by "clicking" (selecting) the first square of this row.
+10.
+On the next line, create a constant called bombLine. (We'll refer to "mines" as "bombs" from now on.)
+
+Set bombLine equal to
+
+'  | B |  '
+bombLine represents what the board will look like when a player clicks and reveals a bomb.
+Print the Simulated Game Board
+11.
+Let's print what a board might look like during a game.
+
+First use console.log() to log the following message:
+
+This is what a board with a guess and a bomb on it would look like:
+12.
+On the next three lines, use console.log() to log guessLine, bombLine, and blankLine, in that order.
+Completion and Reflection
+13.
+Transpile and run your code again in the terminal. You should see the following output:
+
+This is what an empty board would look like:
+  |   |
+  |   |
+  |   |
+This is what a board with a guess and a bomb on it would look like:
+1 |   |
+  | B |
+  |   |
+Congratulations! You completed the first part of the Minesweeper project.
+
+Reflect on the knowledge you used in this project. As you do so, consider the following questions:
+
+You manually created (and printed) an empty game board and a simulated game board. How might you do this programmatically in the future?
+You manually added a guess and a bomb to the simulated game board. How might you add the interactivity required for a learner to guess on the board? How might bombs be added randomly to the board?
+We'll expand minesweeper.js throughout the coming weeks to help address the questions above (and more).
+
+
+*********************
