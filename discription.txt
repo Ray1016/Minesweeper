@@ -121,3 +121,259 @@ We'll expand minesweeper.js throughout the coming weeks to help address the ques
 
 
 *********************
+
+Creating a Game Board
+Take a minute to review what you accomplished in the first part of this project. You:
+
+Manually built an empty game board
+Printed the empty game board
+Manually built a simulated game board
+Printed the simulated game board
+Unfortunately, both versions of the game board were hard coded. As you continue to build minesweeper.js, we'll want to make sure that game boards can be dynamically generated.
+
+In this part of the project, we'll move closer to that goal. There will still be some hard coding, but you'll also code the foundational parts of the project that will be reused in the future to generate game boards.
+
+Take a minute to review what you accomplished in the first part of this project. You:
+
+Manually built an empty game board
+Printed the empty game board
+Manually built a simulated game board
+Printed the simulated game board
+Unfortunately, both versions of the game board were hard coded. As you continue to build minesweeper.js, we'll want to make sure that game boards can be dynamically generated.
+
+In this part of the project, we'll move closer to that goal. There will still be some hard coding, but you'll also code the foundational parts of the project that will be reused in the future to generate game boards.
+
+Let's get started!
+
+**************************************************
+Dynamically Generate Game Boards
+Welcome to the third installment of the JavaScript Minesweeper project. Take a minute to review what you accomplished in the second part of this project. You:
+
+Used nested arrays to manually create a game board
+Wrote a function to neatly log the game board
+Accessed the nested arrays to set a guess and a bomb on the game board
+In this part of the project, you'll increase the functionality of minesweeper.js by dynamically generating a player board and a bomb board. Whereas previous installments of this project could be completed in 20 lines of code (or less), you should expect to write about 50 lines of code in this third part.
+
+Finally, this third installment will be more difficult than the first two parts. It will require that you read carefully, take risks in writing code, and learn through trial and error. This is a common workflow for software developers. Although the project will be challenging, it will also be highly rewarding: you'll have a more functional file and be one step closer to a polished, final product.
+
+Once again, you'll write in the src/minesweeper.js file.
+
+Feel free to keep the printBoard() function you previously wrote (it'll be refactored in this project), but note that there will be lots of new code. You will be better set up for success if you delete everything and start fresh again. The rest of this project will assume that you are starting anew.
+
+Again, make sure your project is set up for transpilation. Ensure you are in your src directory, transpiling to the lib directory.
+
+Finally, remember that you can also demo a completed version of this project in the Codecademy terminal.
+Dynamically Generate a Player Board
+2.
+Previously, you hard coded the game board and printed its contents manually. In this project, you'll generate the game board dynamically, meaning you won't have to worry about hard coding game boards anymore. The code you write in this project will take care of that problem.
+
+Instead of creating one singular game board, we're going to create two: one board for the player's guesses and another board that will hold the actual bomb locations. Later, you'll write code so that they can communicate with each other.
+
+Start by creating a constant called generatePlayerBoard on line 1 of your file. This will store a function that will generate a blank board of a given size to hold the player's guesses
+3.
+Set generatePlayerBoard equal to an arrow function that accepts two parameters: numberOfRows and numberOfColumns.
+Stuck? Get a hint
+4.
+Before we continue, let's walk through how this function should behave.
+
+generatePlayerBoard(), when called, will accept two arguments: the number of rows and number of columns.
+
+The function should:
+
+Add an empty space (' ') to each column in every row
+Add each row to to a larger game board, thereby constructing the player's board
+For example, generatePlayerBoard(2, 3) would result in a game board that looks like the following:
+
+[
+  [' ', ' ', ' '],
+  [' ', ' ', ' ']
+]
+This example generated a board with two rows and three columns. Later, you'll write a function that will format the game board to print it.
+5.
+Inside of the function, start by creating a variable called board. Set it equal to an empty array. This array will represent the overall game board.
+6.
+In the next few steps, you're going to use nested for loops to iterate through nested arrays to build up the player board. If you're having trouble visualizing how nested for loops iterate through arrays, play the video to the right. It demonstrates exactly how each for loops targets (and iterates) through nested arrays.
+
+After your board declaration, start a for loop that iterates through the number of rows that have been supplied to the function.
+7.
+Inside of this for loop, create a variable called row. Set it equal to an empty array. This row will represent a single row to be added to the game board.
+8.
+You'll have to add empty spaces ' ' to each column in the row array you just created. The empty spaces represent squares on the board.
+
+The number of empty spaces that you add to the array must match the number of columns passed to the function.
+
+On the next line, create a for loop that loops through the number of columns specified to the function. (You should still be inside of the first for loop you created.)
+9.
+Inside of this nested for loop, use the .push() array method to add ' ' to the row array. This is the only line of code that you will write in this nested for loop.
+
+This code will add the correct number of empty spaces (' ', or squares) to each row.
+Stuck? Get a hint
+10.
+Just outside of the closing curly bracket (}) of the inner for loop, use the same method to push the newly-created row into the board array.
+Stuck? Get a hint
+11.
+Finally, just outside of the closing bracket (}) of the outer for loop, return the game board (board).
+
+At the end of the file, try calling your generatePlayerBoard() function with a few different sets of arguments and logging the results to the console. Transiple and run your code to ensure your function is working as intended. Once done, delete these calls.
+Stuck? Get a hint
+
+Dynamically Generate a Bomb Board
+12.
+You just wrote a function that will dynamically generate a player's board no matter what size it is. No more hard coding game boards!
+
+Next, you'll dynamically generate a bomb board. The bomb board is essentially the same as a player board. The only difference is that it is meant to contain only bombs. Later, you will use this board to check players' guesses. For now, let's focus on just dynamically generating the bomb board.
+
+Start by creating a constant called generateBombBoard.
+13.
+Next, set generateBombBoard equal to an arrow function that takes three parameters: numberOfRows, numberOfColumns, numberOfBombs.
+Stuck? Get a hint
+14.
+Before we continue, let's walk through how this function should behave.
+
+generateBombBoard(), when called, will accept three arguments: a specified number of rows, columns, and bombs.
+
+The function should:
+
+Create the game board of the specified size
+Add bombs to random squares on the game board
+For example, generateBombBoard(5, 9, 14) would result in a 5 x 9 game board (45 total squares) with 14 bombs placed randomly on the board.
+15.
+As mentioned before, the creation of the board is nearly identical to what you coded in the previous generatePlayerBoard() function.
+
+Copy all of the code inside of the generatePlayerBoard() function. Paste it all inside of the generateBombBoard() function.
+16.
+Only one thing needs to change in the code you copied and pasted.
+
+Instead of pushing ' ' to row, replace ' ' with null.
+Randomly Place Bombs on the Bomb Board
+17.
+Perfect! You've added the code that will dynamically generate a bomb board, but you haven't yet added the code that will randomly add bombs to the bomb board, so let's add that to the generateBombBoard() function.
+
+Place your cursor above the following line of code and press "Enter" (or "Return") on your keyboard a few times.
+
+return board;
+You'll need some space to fully complete the rest of the function.
+18.
+Create a variable called numberOfBombsPlaced and set it to 0. This will represent our bomb counter. Once this number reaches the numberOfBombs specified, we can stop adding bombs to the board.
+19.
+You'll want to continue adding bombs to the board until our counter reaches the specified number of bombs to the function (numberOfBombs).
+
+Create a while loop that meets this condition.
+Stuck? Get a hint
+20.
+To place bombs randomly on the board, we'll have to generate a random location on the board.
+
+Start by creating a variable called randomRowIndex.
+21.
+Set randomRowIndex equal to a random number between zero and the specified number of rows. Use Math.random() to help you.
+Stuck? Get a hint
+22.
+Briefly skim the documentation for the Math.random() function.
+
+Notice that Math.random() returns any number between 0 and 1 (including 0, but excluding 1). This means that randomRowIndex will almost always be a decimal, which doesn't make sense if we're going to use it to access as an index for an array.
+
+Wrap the code you just wrote with this function. What will it do?
+Stuck? Get a hint
+23.
+Good. Now you can return a random row index that is actually a whole number. On the next line, do almost the exact same thing, but for generating a random column index.
+24.
+Let's use the random row and column indices to place a bomb on the board!
+
+On the next line, use the board variable and access the space at the generated randomRowIndex and randomColumnIndex. Set it equal to 'B'.
+Stuck? Get a hint
+25.
+On the next line, we'll have to increment the bomb counter. If you don't do this, then the counter will stay set to 0 and the while loop will run forever.
+
+Use the increment operator to increment numberOfBombsPlaced.
+Stuck? Get a hint
+
+26.
+An important note: The code in your while loop has the potential to place bombs on top of already existing bombs. This will be fixed when you learn about control flow.
+
+Add this note as a comment inside of the while loop.
+An Updated printBoard() Function
+27.
+At this point, you have written about 67% of the code needed to complete this project. You're almost there!
+
+Next, you'll update the printBoard() function you wrote previously.
+
+If you deleted this function, create a constant called printBoard and set it equal to an arrow function that accepts one parameter called board.
+Stuck? Get a hint
+28.
+To print our board, regardless of size, we will join together each element in each row with ' | ' to create a well-formated row and then join together each row with '\n' (the new line character) to print each row on its own line.
+
+Inside your printBoard() function, call the .map() method on the board parameter.
+29.
+The .map() method requires a callback function as an argument.
+
+Add a callback function in the form of an arrow function. The arrow function should take one parameter called row.
+Stuck? Get a hint
+30.
+In the arrow function, call the .join() method on row and use ' | ' as the separator.
+
+This .map() call will now return an array of formatted rows.
+Stuck? Get a hint
+31.
+In its current state, the callback function will only join the individual elements within one row of the row array (i.e. it'll only join the ' ' elements in one array) . We'll need to join all rows in the array together as well.
+
+Chain a .join() method call onto your .map() method call. Pass '\n' as the separator. This will join together the array of rows with new lines, placing each row on its own line when printed.
+Stuck? Get a hint
+32.
+Great job! This updated printBoard() function will accept a game board as a parameter, iterate through each of its rows, join the individual elements in each row, and then join all rows together. It will return a brand new game board as a single string to be easily printed.
+
+Wrap this line of code with console.log() in order to log the formatted board to the console.
+Stuck? Get a hint
+Create Both Boards
+33.
+You have just about all of the code written! Congratulations.
+
+The last thing we'll do is test the functions you've written to make sure they function as necessary.
+
+Create a variable called playerBoard and set it equal to generatePlayerBoard with 3 and 4 as its two parameters.
+
+At this point, you should be writing code below and outside of the printBoard() function.
+Stuck? Get a hint
+34.
+Next, create a variable called bombBoard and set it equal to generateBombBoard() with 3, 4, and 5 as its three parameters.
+Stuck? Get a hint
+Print Both Boards
+35.
+Let's print both boards to the console.
+
+On the next line, log a message to the console that says 'Player Board: '.
+36.
+Next, call the printBoard() function and pass in the playerBoard variable as the argument.
+37.
+On the next line, log a message to the console that says 'Bomb Board: '.
+38.
+Next, call the printBoard() function and pass in the bombBoard variable as the argument.
+Completion and Reflection
+39.
+Let's run your code!
+
+In your terminal, transpile your code and run the following command:
+
+node src/minesweeper.js
+Your output should resemble the following:
+
+Player Board:
+  |   |   |
+  |   |   |
+  |   |   |
+Bomb Board:
+ |  | B |
+B |  | B |
+B | B |  |
+A few of things to note:
+
+Remember that the bomb board is randomly generated, so your output may not be an exact replica of the output depicted in the example above. Run your code a couple of more times and notice how the bombs rearrange themselves randomly.
+Your bomb board may sometimes have fewer bombs on it than what was specified in the function call. This is due to the missing control flow code mentioned in Step 26.
+Your bomb board will not appear as neatly formatted as the player board. This is because you are adding null to its board. This is fine, as this is a board that is intended to only hold information, and not to be printed. We are printing here to demonstrate the utility of the generateBombBoard() function.
+40.
+Reflect on the knowledge you used in this project. As you do so, consider the following questions:
+
+How might you improve the generateBombBoard() function so that duplicate bombs aren't added to squares that already contain bombs?
+We have a function that generates the player board. How will a player actually interact with this board?
+Minesweeper will inform you if there is a bomb adjacent to the square you click (if it doesn't contain a bomb itself). How might you implement this functionality into the game?
+
+****************************************************
