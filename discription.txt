@@ -377,3 +377,261 @@ We have a function that generates the player board. How will a player actually i
 Minesweeper will inform you if there is a bomb adjacent to the square you click (if it doesn't contain a bomb itself). How might you implement this functionality into the game?
 
 ****************************************************
+
+Minesweeper: Player Interactivity
+
+In this project, you will complete another portion of the Minesweeper project. You'll use your knowledge of control flow and scope to finish your generateBombBoard() function, find the number of bombs around a tile, and determine if a tile was already flipped.
+
+Add Player Interactivity
+You've made it to the fourth part of the JavaScript Minesweeper project. Take a minute to review what you accomplished in the third part. You:
+
+Wrote a function to generate a player board
+Wrote a function to generate a bomb board and randomly place bombs on the board
+Refactored the printBoard() function
+In this part of the project, you'll polish minesweeper.js by doing the following:
+
+Refactoring the generateBombBoard() function so that it doesn't add duplicate bombs
+Writing a function to retrieve the number of bombs adjacent to the square that has been "clicked" by a player
+Building a function that will let a player "click", or "flip", a tile on the board
+You should expect to write about 40 new lines of code in this part of the project, bringing the total to around 90 lines of code in minesweeper.js.
+
+Let's get started!
+
+Fix generateBombBoard()
+1.
+Open your minesweeper.js file. Make sure that you are in your root directory, transpiling from the src directory to the lib directory.
+
+Remember that you can demo a completed version of this project in the Codecademy terminal.
+2.
+We'll start by fixing the while loop inside of the generateBombBoard() function. Your code should look like this at the moment (or similar to this):
+
+while (numberOfBombsPlaced < numberOfBombs) {
+    let randomRowIndex = Math.floor(Math.random() * numberOfRows);
+    let randomColumnIndex = Math.floor(Math.random() * numberOfColumns);
+    board[randomRowIndex][randomColumnIndex] = 'B';
+    numberOfBombsPlaced++;
+}
+The problem with this code is that it doesn't check to see if there's already a bomb in a tile before placing it in that same tile. This could result in duplicate bombs. Let's fix this.
+
+Write an if statement immediately after the following line of code.
+
+let randomColumnIndex = Math.floor(Math.random() * numberOfColumns);
+Stuck? Get a hint
+3.
+The if statement should check that there is not a 'B' on the board at randomRowIndex and randomColumnIndex.
+Stuck? Get a hint
+4.
+If there isn't a 'B' at that location, then we'll place a bomb there. It turns out, however, that you've already written the code that will do this.
+
+Copy the following lines of code and paste them inside of the if statement's body:
+
+board[randomRowIndex][randomColumnIndex] = 'B';
+numberOfBombsPlaced++;
+Add getNumberOfNeighborBombs()
+5.
+Next, you'll build one of the main pieces of Minesweeper functionality: displaying the number of bombs adjacent to the flipped tile.
+
+Here's a brief overview of how this function will work:
+
+The function will determine the size of the game board
+The function will use the location of the flipped tile
+Using an array index offset system (more on this later), the function will check all adjacent tiles for bombs
+If a bomb exists at an adjacent tile, you'll record it by incrementing a bomb counter
+The number of bombs adjacent to the flipped tile will be returned by the function
+This will be a challenging function to write, but we'll guide you through it. At the same time, don't be afraid to take risks, make mistakes, and learn by doing. Let's start.
+
+Create a constant called getNumberOfNeighborBombs. Place it after the closing curly brace (}) of the generateBombBoard() function.
+6.
+Set getNumberOfNeighborBombs equal to an arrow function. The arrow function should accept three parameters: bombBoard, rowIndex, columnIndex. This will calculate the number of bombs next to the square at the given rowIndex and columnIndex on the provided bombBoard.
+Stuck? Get a hint
+7.
+A flipped tile can have 8 possible neighbors, at most, no matter the size of a board:
+
+ a | b | c
+ d | + | e
+ f | g | h
+In the example above, the + represents a flipped tile. The letters surrounding it represent adjacent neighbors.
+
+We'll need a way to represent tiles that are adjacent to a flipped tile.
+
+The board that we have created is a two-dimensional array — an array of arrays. Each array is a row on the board and each index of these arrays constitute the columns.
+
+Each element in the example above is at most 1 row and 1 column away from the flipped tile, +.
+
+For example, f is 1 row after and 1 column before the flipped tile. We have to add 1 to the row and subtract 1 from the column. This would be [1,- 1]
+
+There are eight possible combinations of [1]s and [-1]s that would represent each adjacent neighbor.
+
+If you're having trouble visualizing this system, take a look at the diagram to the right. It demonstrates a flipped tile (denoted with an X). All other tiles are represented with their corresponding offsets.
+
+We'll store the pairs of [rowOffset, columnOffset] for adjacent neighbors in an array. Inside of your function, create a constant called neighborOffsets and start by setting it equal to an empty array.
+Stuck? Get a hint
+8.
+Next, add 8 empty arrays to the neighborOffsets array. We'll use these nested arrays to represent the 8 possible offset combintations of neighboring tiles.
+Stuck? Get a hint
+9.
+Fill in each nested array with the row and column offsets of the surrounding tiles. The order in which you add them doesn't matter.
+Stuck? Get a hint
+
+10.
+Great! neighborOffsets will help us check adjacent tiles for bombs later.
+
+As we check adjacent tiles, we'll need to make sure we are checking valid tiles. For example, what if a flipped tile is on an edge of the game board? In that case, it may be missing some adjacent tiles, like so:
+
+ a | b | c
+ d | + | e
+In the example above, the flipped tile + is at the bottom edge of a game board. That means it is missing three adjacent neighbors.
+
+We can start checking these cases by first retrieving the dimensions of the game board.
+
+On the next line, create a constant called numberOfRows. Set it equal to the length of the bombBoard that is passed into the function as a parameter.
+Stuck? Get a hint
+
+
+11.
+We'll also want the total number of columns.
+
+On the next line, create a constant called numberOfColumns. Set it equal to the length of the first element of bombBoard. (The first element is a row, and the number of entries in a row represents the total number of columns).
+
+See if you can complete this without looking at the hint.
+Stuck? Get a hint
+12.
+On the next line, create a variable called numberOfBombs. Set it equal to 0. This variable will be used to store the number of bombs adjacent to the flipped tile.
+13.
+Now comes the challenging part. We'll have to build the following interactivity:
+
+Grab the row and column indices of the tile that a user specifies (say they input 0, 2, we'll have to use that to check for bombs around the tile in the first row and third column)
+Check all possible neighboring tiles around the indicated tile
+If a neighboring tile has a bomb, increment the bomb counter
+Start by calling the .forEach() method on the neighborOffsets array.
+Stuck? Get a hint
+14.
+.forEach() requires a callback method. Pass one in as an arrow function. The arrow function should take one parameter called offset.
+Stuck? Get a hint
+15.
+At this point, we're set up to iterate through each array in neighborOffsets. We'll use these row and column offsets to check the neighbors around a flipped tile.
+
+Inside of the callback function, create a constant called neighborRowIndex.
+Stuck? Get a hint
+16.
+Recall that getNumberOfNeighborBombs() accepts a rowIndex and a columnIndex. These two parameters represent the row and column indices of a tile that is to be flipped. We'll have to use these parameters to check for neighboring tiles.
+
+Let's store the index of a neighboring tile (on a row). Set neighborRowIndex equal to the sum of rowIndex and the first element of offset.
+
+(Recall that offset represents a nested array in neighborOffsets.)
+Stuck? Get a hint
+17.
+We'll need to do the same thing for columns. On the next line, create a constant called neighborColumnIndex. Set it equal to the sum of columnIndex and the second element in offset.
+Stuck? Get a hint
+
+18.
+Next, you'll need to check if the row and column indices for neighboring tiles are valid (for example, we don't want to check tiles that are "off the grid" and don't exist).
+
+Start by adding an if statement on the next line.
+19.
+The expression that the if statement needs to check that all of the following conditions are met:
+
+neighborRowIndex is greater than or equal to 0
+neighborRowIndex does not exceed the total number of rows
+neighborColumnIndex is greater than or equal to 0
+neighborColumnIndex does not exceed the total number of columns
+Stuck? Get a hint
+
+20.
+Great job! That condition will make sure we are checking legal/valid neighboring tiles.
+
+Next, we'll want to check if the tile at those indices (on the bombBoard) already contains a bomb ('B').
+
+Nest another if statement that checks for this condition. Remember, you're checking to see if bombBoard has a 'B' at the neighboring row and column indices.
+Stuck? Get a hint
+21.
+If both of these conditions are met, then we'll want to increment numberOfBombs. This should be the only line of code inside of the nested if statement.
+22.
+At this point, the section of code for neighborOffsets.forEach() is complete.
+
+Recall that the purpose of this function is to return the number of bombs in an adjacent neighbor.
+
+Right after the close of the .forEach() method (});), but before just before the close of the function ();), return numberOfBombs.
+Stuck? Get a hint
+Add flipTile()
+23.
+Congrats on completing a challenging function!
+
+Next, you'll need to write a function that will allow the user to flip a tile.
+
+On the next line, create a constant called flipTile. Set it equal to an arrow function that acccepts four parameters: playerBoard, bombBoard, rowIndex, columnIndex.
+24.
+The goal of flipTile() is to allow the player to flip a tile and to update that tile accordingly. The function should explicitly check for two things:
+
+If the specified tile has already been flipped
+If the specified tile has a bomb in it
+Otherwise, that tile should be updated with the number of neighboring bombs. Let's begin.
+
+Start by creating an if statement. The if statement should check to see if the specified tile in playerBoard (using rowIndex and columnIndex) is not empty. "Empty" means ' '.
+Stuck? Get a hint
+
+25.
+Inside, inform the user with a message that says This tile has already been flipped!.
+
+On the next line, return.
+26.
+Let's continue to chain off of this if statement. Add an else if statement. It should check if there is a bomb 'B' at the specified tile on the bombBoard. (Make sure to read that last sentence carefully.)
+27.
+If there is a bomb at that row index and column index on the bomb board, we should place a bomb at those same row and column indices on the playerBoard.
+
+Inside of the else if, set the tile at the specified location to 'B'. This line of code places a bomb on the player board by checking the bomb board!
+28.
+Let's finish this chained if / else if statement. Add an else part to the statement.
+
+At this point, the code will have checked to see if:
+
+The tile is not empty (already been flipped)
+There is a bomb at that tile
+If none of these cases are true, we should let the user flip the tile and then display the number of neighboring bombs on that same tile. (You already wrote a function to grab the number of neighboring bombs!)
+
+Inside of the else portion, access the specified tile on playerBoard. Set it equal to calling getNumberOfNeighborBombs with bombBoard, rowIndex, and columnIndex as arguments. See if you can do this without looking at the hint.
+Stuck? Get a hint
+Use flipTile()
+29.
+At this point, you're just about done with this project! Let's write a couple more lines of code to test out your functions!
+
+On the very last line of minesweeper.js, call the flipTile() function. Pass in playerBoard, bombBoard, 0, and 0 as parameters.
+
+(This will flip the tile at location [0,0] on the player board, and also check the bomb board for bombs at the location).
+30.
+On the next line, log a message that says 'Updated Player Board:. This will help you read the output clearly.
+31.
+We'll need to print out the player board to see flipTile() in action.
+
+On the next line, call the printBoard() function and pass in playerBoard as an argument.
+Completion and Reflection
+32.
+Run your file in the terminal! What do you see?
+
+Here's some example output when flipping the tile at location [0, 0]:
+
+Player Board:
+  |   |
+  |   |
+  |   |
+Bomb Board:
+ | B |
+B |  |
+B |  |
+Updated Player Board:
+2 |   |
+  |   |
+  |   |
+Your output will likely look different (i.e., you weren't instructed to add messages to distinguish between the player board, the bomb board, and an updated player board, but feel free to include this in your code).
+
+Keep running your file in the terminal repeatedly. Notice how the bomb board resets randomly and how the player board updates accordingly.
+
+Alternatively, try passing in different locations to flipTile() to see how the player board changes. (You'll have to run your file again to see the changes).
+
+Congratulations! You've completed the fourth part of the Minesweeper project.
+33.
+Reflect on the knowledge you used in this project. As you do so, consider the following questions:
+
+How might we better organize minesweeper.js?
+To play Minesweeper, you have to manually call flipTile() in the file repeatedly. How might we abstract this functionality such that a player could do this directly from the terminal?
+We'll expand minesweeper.js throughout the coming weeks to help address the questions above (and more).
