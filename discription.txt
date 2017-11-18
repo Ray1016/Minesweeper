@@ -635,3 +635,264 @@ Reflect on the knowledge you used in this project. As you do so, consider the fo
 How might we better organize minesweeper.js?
 To play Minesweeper, you have to manually call flipTile() in the file repeatedly. How might we abstract this functionality such that a player could do this directly from the terminal?
 We'll expand minesweeper.js throughout the coming weeks to help address the questions above (and more).
+
+***********************************************
+
+BUILD MINESWEEPER WITH JAVASCRIPT
+Adding Class Structure
+This is the fifth part of the JavaScript Minesweeper project. Take a minute to review what you accomplished in the fourth part. You:
+
+Refactored generateBombBoard() using control flow
+Wrote a function to retrieve number of bombs in adjacent tiles
+Built user interactivity with flipTile()
+In this part of the project, you'll group and organize much of this functionality together with class structure. Specifically, you'll:
+
+Add a Game and Board class
+Create an instance of a game and play a move
+You should expect to write about 30 new lines of code in this part of the project, bringing the total to roughly 120 lines of code in minesweeper.js.
+
+Let's get started!
+Mark the tasks as complete by checking them off
+Getting Started
+1.
+Open your terminal and open minesweeper.js file in your preferred text editor. Make sure that you are in your the root directory, transpiling to the lib directory.
+
+Remember that you can demo a completed version of this project in the Codecademy terminal.
+Create the Board Class
+2.
+It turns out that you have almost all of the code that you'll need to complete this part of the project. You'll spend the majority of this project adding class structure to the functions you previously wrote.
+
+Why are we incorporating class structure to minesweeper.js?
+
+Although you added a lot of dynamic functionality in the previous parts of this project, there were still many things that you had to complete manually. For example:
+
+You had to separately create a player board and a game board manually.
+You had to print the board(s) every single time you wanted to see an update to the board(s).
+Finally, you also had to specify the player board and bomb board every time you wanted to flip a tile.
+Adding organized class structure will allow us to remove a lot of these manual, very cumbersome gaming interactions. Most importantly, though, it will make your code easier to read and build upon in the future.
+3.
+Place your cursor on line 1 of minesweeper.js and press "Enter" (or "Return") on your keyboard a few times. You'll need some space to start writing code.
+
+On line 1, add a class called Board. Make sure not to write anything inside the class just yet.
+Stuck? Get a hint
+Add a Board Constructor
+4.
+To use this class later (as an object), we'll need to add a constructor for the class.
+
+Inside of Board add a constructor. The constructor should accept three parameters: numberOfRows, numberOfColumns, and numberOfBombs.
+
+When a user creates an instance of a board (using the constructor), they will need to specify the size of the board as well as the number of bombs on the board (which is what the parameters represent).
+5.
+Next, we'll have to set an instance's properties.
+
+On the next line, use this to set an instance property called _numberOfBombs equal to the numberOfBombs argument.
+Stuck? Get a hint
+
+6.
+Next, set an instance property called _numberOfTiles equal to the product of numberOfRows and numberOfColumns (numberOfRows * numberOfColumns).
+
+This instance property will represent the size of the game board and will be used to determine if the game is over or not at the end of each turn.
+7.
+Next, you'll add two lines of code that technically won't work yet. You already have the code written to make these lines of code work (the generatePlayerBoard() and generateBombBoard() functions), but that code isn't in the correct place at the moment. You'll fix this later in this project.
+
+On the next line, create an instance property called _playerBoard. Set it equal to calling the generatePlayerBoard() function on Board.
+
+You should pass in numberOfRows and numberOfColumns to generatePlayerBoard().
+Stuck? Get a hint
+8.
+On the next line, do the same thing, but this time, name the instance property _bombBoard.
+
+Make sure to call generateBombBoard() and pass in all three constructor parameters (in the same order that they are passed to the constructor).
+
+This line of code will complete the constructor.
+Stuck? Get a hint
+Add a playerBoard() Getter Method
+9.
+Next, we'll need to add a getter method to the class. What exactly will this method "get", or return?
+
+It should return an instance's playerBoard.
+
+On the next line, define a getter method called playerBoard.
+Stuck? Get a hint
+10.
+On the next line, return this instance's playerBoard. Don't forget the underscore.
+Add flipTile() to the Board Class
+11.
+Next, you'll add the flipTile() function to the Board class.
+
+Move the entire flipTile() function you previously wrote and paste it into the Board class. It should come after the playerBoard() getter method.
+Update .flipTile()
+12.
+This method is almost complete, but needs a bit of cleaning up. Make sure to do the following:
+
+Remove const
+Remove the playerBoard and bombBoard parameters
+Make sure to reference instance properties using this and underscores (this should be a matter of simply adding this to existing variable names in the function)
+Make sure to reference getNumberOfNeighborBombs() using this (no underscores)
+Remove bombBoard from the list of arguments passed to getNumberOfNeighborBombs()
+Leave rowIndex and columnIndex as they are
+13.
+All of this cleaning up is necessary if we want to use the Board class later.
+
+To finish off .flipTile(), you should use the decrement operator to decrease the numberOfTiles instance property by 1.
+
+This line of code should go just before the closing curly brace (}) of .flipTile().
+Stuck? Get a hint
+Add getNumberOfNeighborBombs() to the Board Class
+14.
+Next, you'll add the getNumberOfNeighborBombs() function to the Board class.
+
+Move the entire getNumberOfNeighborBombs() function you previously wrote into the Board class. It should be pasted after the .flipTile() method.
+Update getNumberOfNeighborBombs()
+15.
+This method is also almost complete, but needs a bit of cleaning up. Make sure to do the following:
+
+Remove const
+Remove the arrow function syntax (use function(param1, ...))
+Remove the bombBoard parameter from the function
+Make sure to reference instance properties using this and underscores (this should be a matter of simply adding this to existing variable names in the function, like bombBoard)
+That's it for this method!
+Check for Safe Tiles
+16.
+We'll need a way of informing the user that they've won the game.
+
+A user will win if and only if all of the non-bomb tiles have been flipped.
+
+In other words, a user wins when there are no non-bomb ("safe") tiles remaining to be flipped.
+
+On the next line, add a method called hasSafeTiles.
+17.
+.hasSafeTiles() will need to check the numberOfTileson the board versus the numberOfBombs on the board.
+
+If these two values are equal, then the player has won the game (there are no more safe tiles on the board!).
+
+Otherwise, if the values are not equal, the player has to continue playing the game (flipping tiles).
+
+Inside of this method, add an if statement that checks if numberOfTiles is not equal the numberOfBombs. Make sure to use this and underscores when referring to these instance variables.
+Stuck? Get a hint
+18.
+Actually, the expression inside of the if statement is truthy, meaning we don't need an if statement to evaluate it.
+
+Delete the if statement, but do not delete the expression the if statement was checking. Instead, simply return this expression. Don't forget your semicolon at the end!
+Stuck? Get a hint
+Update printBoard()
+19.
+Next, you'll need to update the printBoard() function a bit. Make sure you do the following:
+
+Remove const
+Change the name of the function to print()
+Remove the arrow function syntax (simply start the function with the opening {)
+Make sure to reference instance properties using this and underscores (this should be a matter of simply adding this to existing variable names in the function, like playerBoard)
+That's it!
+Add generatePlayerBoard() to the Board Class
+20.
+Move the entire generatePlayerBoard() function you previously wrote into the Board class. It should be pasted after the .print() method.
+Update .generatePlayerBoard()
+21.
+Next, you'll need to update the generatePlayerBoard() function a bit. Make sure you do the following:
+
+Remove const and replace it with static to make this a class method
+Remove the arrow function syntax (use function(param1, ...)), but keep the parameters
+That's it! This will allow the code you previously wrote in the constructor to function properly.
+Add generateBombBoard() to the Board Class
+22.
+Move the entire generateBombBoard() function you previously wrote into the Board class. It should be pasted after the .generatePlayerBoard() method.
+Update generateBombBoard()
+23.
+Next, you'll need to update the .generateBombBoard() method a bit. Make sure you do the following:
+
+Remove const and replace it with static to make this a class method
+Remove the arrow function syntax (use function(param1, ...)), but keep the parameters
+That's it! This will allow the code you previously wrote in the constructor to function properly.
+Create the Game Class
+24.
+Great job on completing the Board class! Remember, previously you had to manually create player boards, game boards, and print the boards individually. We added all of that functionality to the Board class so that it can be used in a way that decreases the amount of manual code that has to be written.
+
+To utilize the Board class, we'll create another class that will make calls to the methods in Board. This class will be the main class used to play Minesweeper. Don't worry about the details just yet. It will all come together as you continue to build.
+
+Place your cursor on line 1 of minesweeper.js. Press "Enter" (or "Return") on your keyboard a few times. You'll need space to add the new class.
+
+On line 1, create a class called Game.
+Add a Game Constructor
+25.
+To use this class later (as an object), we'll need to add a constructor for the class.
+
+Inside of Game add a constructor. The constructor should accept three parameters: numberOfRows, numberOfColumns, and numberOfBombs.
+
+When a user creates an instance of a board (using the constructor), they will be asked to specify the size of the board as well as the number of bombs on the board (which is what the parameters represent).
+26.
+To call Board methods, we'll have to create an instance of a Board inside of the Game constructor.
+
+Create an instance property called _board (don't forget this).
+
+Set it equal to an instance of Board and pass in the constructor's parameters as arguments.
+Stuck? Get a hint
+Add playMove() to the Game Class
+27.
+Great! Now you have the board that we will call Board methods on.
+
+Add a method called playMove to the Game class (you should be outside of the constructor at this point).
+
+The method should take rowIndex and columnIndex as parameters.
+28.
+.playMove() will include all of the functionality needed to play a session of Minesweeper, including flipping a tile, letting the user know if they discovered a bomb, and allowing a user to continue otherwise (until they win, or lose).
+
+Let's start by flipping a specified tile when .playMove() is called.
+
+Inside of the function, call .flipTile() on this._board. Pass in rowIndex and columnIndex as arguments.
+29.
+Next, let's build the logic that determines what should happen after a player flips a tile. Here's an overview of how the logic should work:
+
+If the flipped tile has a bomb, the game is over
+Else, if the board does not have any safe tiles left, the player has won the game
+Otherwise, the player should be allowed to continue playing
+On the next line, start an if statement. The statement should check if the playerBoard provided by this._board has a B and the given row index and column index.
+Stuck? Get a hint
+30.
+If there is a bomb, the game is over! Inside of the if statement, log a message indicating that the game is over.
+
+After that, print the board by calling .print() on this._board.
+31.
+That completes the first condition. Chain an if / else statement now. This statement chould check if there are no safe tiles on this._board.
+Stuck? Get a hint
+32.
+Remember, if a board doesn't have any safe tiles left on it, then the user has won.
+
+Inside of the statement, log a message that congratulates the user on winning.
+33.
+Finally, chain an else to the statements.
+
+Remember, unless a player has flipped a bomb or won the game, the user should be allowed to continue playing.
+
+Inside of the else, log a message that says Current Board:. On the next line, print the board.
+Instantiate the Game Class
+34.
+You're just about done! All that's left is to try the classes and the methods out.
+
+Navigate to the very last line of minesweeper.js. Create a constant called g and instantiate a new Game. The game should be a 3 x 3 board, with a total of 3 bombs on the board.
+Stuck? Get a hint
+Play a Move
+35.
+Let's play a move.
+
+On the next line, call .playMove() on g. Pass in the board coordinates of your choice (e.g., 0,0).
+Completion and Reflection
+36.
+Once again, we have to manually run the file to see what the output of our code (and game) will be.
+
+Run your file in the terminal! What do you see?
+
+Here's some example output when flipping the tile at position 0,0, using g.playMove(0,0):
+
+Game Over! Final Board:
+B |   |
+  |   |
+  |   |
+Try making the board slightly bigger, or keeping the board the same size but changing the number of bombs on the board. Alternatively, you can also pass different coordinates to .playMove(). (You'll have to run your file again to see the changes).
+
+Congratulations! You've completed the fifth part of the Minesweeper project.
+37.
+Reflect on the knowledge you used in this project. As you do so, consider the following questions:
+
+Playing the game is still very manual. Games must be started (and moves must be made) within minesweeper.js. How can this functionality be improved?
+In the sixth and final part of this project, we'll expand minesweeper.js address the question above. Congrats again on all of your hard work!
