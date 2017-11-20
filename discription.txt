@@ -896,3 +896,141 @@ Reflect on the knowledge you used in this project. As you do so, consider the fo
 
 Playing the game is still very manual. Games must be started (and moves must be made) within minesweeper.js. How can this functionality be improved?
 In the sixth and final part of this project, we'll expand minesweeper.js address the question above. Congrats again on all of your hard work!
+*******************************
+Part 6 - Final
+
+Build Minesweeper with JavaScript
+Minesweeper in the Terminal
+
+Welcome to the sixth and final part of the JavaScript Minesweeper project! Take a minute to review what you accomplished in the fifth part. You:
+
+Created a Board and Game class
+Removed a lot of manual functionality (but not all of it)
+Instantiated the Game class and played a move
+In this part of the project, you'll polish up the code you've already written. The objective of this project is to:
+
+Refactor your code into modules for readability and reusability
+Allow a player to play Minesweeper in the terminal
+You won't write a lot of new code in this part, but it will require you to create new files and organize code, so read carefully.
+
+Let's get started!
+Mark the tasks as complete by checking them off
+Getting Started
+1.
+Open your terminal and open minesweeper.js file in your preferred text editor.
+
+To demo a completed version of this project, follow the instructions outlined in the code snippet of Step 9.
+Create board.js
+2.
+To play Minesweeper in the terminal, we'll have to reorganize the code you've already written.
+
+First, start by creating a new file called board.js.
+3.
+Next, copy and paste the entire Board class from minesweeper.js into board.js.
+Export board.js
+4.
+The contents of board.js will be used in a file we'll create shortly. In order for this code to be usable, or imported, into that new file, we'll have to export the Board class.
+
+Add export to the beginning of line 1 of board.js.
+Stuck? Get a hint
+export class Board {
+
+// ...
+
+}
+Create game.js
+5.
+Next, create a new file called game.js.
+6.
+Next, copy and paste the entire Game class from minesweeper.js into game.js.
+Import the Board Class
+7.
+The code in game.js won't function properly if it can't access the Board class, so you'll have to import it into game.js.
+
+Place your cursor on line 1 of game.js and press "Enter" (or "Return") on your keyboard a few times to give you some space.
+
+On line one, import the Board class from the board.js file.
+Stuck? Get a hint
+import { Board } from './board';
+Remove minesweeper.js (Optional)
+8.
+At this point, feel free to delete your empty minesweeper.js file. You won't need it anymore. Make sure you don't accidentally delete code that is needed in any of the other two new files.
+Add Playing Instructions
+9.
+Anyone with access to these files should know how to play the game in the terminal. Copy and paste the following instructions to the very top of game.js.
+
+// To play Minesweeper, we will create instances of MineSweeperGame in command line.
+// For example:
+// In the command line, navigate to the lib directory and run `node`
+// Run `.load game.js` to load the contents of this file.
+// Then create a Game instance and run commands like so:
+// let game = new Game(3, 3, 3);
+// game.playMove(0, 1);
+// game.playMove(1, 2);
+// When done run `.exit`
+Transpile Your Code
+10.
+import and export syntax is still highly unsupported in many versions of Node - potentially including your own! To fix this, we will need to transpile our code.
+
+In order to test your code, set up your project to support transpilation. If you need help remembering how to do this, refer to our course on Browser Compatibility and Transpilation or open the hint below.
+Stuck? Get a hint
+Here are the steps for setting up transpilation in your project:
+
+Initialize your project using npm init
+Install babel dependencies by running
+npm install babel-cli -D
+npm install babel-preset-env -D
+Create a .babelrc file inside your project and add the following code inside it:
+{
+  "presets": ["env"]
+}
+Add the following script to your scripts object in package.json:
+"build": "babel src -d lib"
+Run npm run build whenever you want to transpile your code from your src to lib directories.
+11.
+Once you've set up your project to be transpilable, transpile it by running npm run build. This should transpile your code to a directory called lib.
+12.
+Finally, navigate to your transpiled code in lib using your terminal and move on to the next step to test out your game.
+Completion and Reflection
+13.
+Save your changes and follow the instructions at the top of game.js.
+
+Play the game. What do you see?
+
+Here's some example output when flipping the tile at position 2,1 and 2,2 using a 4 x 4 board with 3 bombs:
+
+Current board:
+  |   |   |
+  |   |   |
+  | 1 |   |
+  |   |   |
+Game Over! Final Board:
+  |   |   |
+  |   |   |
+  | 1 | B |
+  |   |   |
+14.
+Congratulations! You've completed the Minesweeper project!
+
+You've come a long way. You started the project by:
+
+Manually creating every type of board
+Manually formatting all boards
+Simulating a game of Minesweeper
+Not being able to play in the terminal
+Now, your project is at a state where all of these initial issues have been solved! You don't manually create boards and you can play in the terminal.
+
+Over the course of the six parts of this project, you utilized loops, control flow, data structures, functions, classes, methods, and modules to achieve a fully functioning, terminal-based Minesweeper game!
+
+You should be proud of how far you've come. As you continue towards your goal of building front-end web apps, you'll be able to use many of these foundational skills as your learn more challenging and advanced concepts. You also took risks during the course of this project, which helped you learn by doing - a skill that will be critical as you progress.
+
+We suggest that you push your JavaScript knowledge by adding features to your Minesweeper game. This will allow you to not only reinforce your new skills, but create something unique and exciting in the process. We've provided a few ideas for how to improve your Minesweeper game in the hint below, but now that you know how to code, you can implement any feature you want!
+
+Once again, congratulations on a successful project and thank you for all of the hard work you put into this project. Enjoy!
+Stuck? Get a hint
+Below is a list of some potential features to add to your Minesweeper game:
+
+Add validation to ensure that board dimensions make sense. For example, a board should not be able to be created with more bombs than it has tiles.
+Add a timer which lets players know how long it took them to win (or lose).
+Add recursive flipping, when a tile is flipped that isn't touching a bomb (would have the number zero printed on it), all adjacent tiles additionally flip over.
+Add a method to place flags at a tile instead of flipping that tile. If a square has a flag on it, it can't be flipped over.
